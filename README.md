@@ -29,7 +29,7 @@ npm run dev
 # Backend
 cd backend
 npm install
-npm run dev
+npm run start
 ```
 
 Create the required `.env` files for MongoDB, JWT, and other configuration values.
