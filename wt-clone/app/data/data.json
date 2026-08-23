@@ -1,0 +1,90 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "name": "John Doe",
+      "status": "Online",
+      "photo": "/avatar.jpg"
+    },
+    {
+      "id": "user2",
+      "name": "Jane Smith",
+      "status": "Offline",
+      "photo": "/avatar2.jpg"
+    }
+  ],
+  "messages": [
+    {
+      "_id": "msg1",
+      "senderId": "user1",
+      "receiverId": "user2",
+      "text": "Hey Rahul! 👋",
+      "image": "",
+      "createdAt": "2026-08-07T09:00:00.000Z",
+      "updatedAt": "2026-08-07T09:00:00.000Z"
+    },
+    {
+      "_id": "msg2",
+      "senderId": "user2",
+      "receiverId": "user1",
+      "text": "Hi Ankit! How are you?",
+      "image": "",
+      "createdAt": "2026-08-07T09:01:15.000Z",
+      "updatedAt": "2026-08-07T09:01:15.000Z"
+    },
+    {
+      "_id": "msg3",
+      "senderId": "user1",
+      "receiverId": "user2",
+      "text": "I'm doing great. Working on the WhatsApp clone 😄",
+      "image": "",
+      "createdAt": "2026-08-07T09:02:10.000Z",
+      "updatedAt": "2026-08-07T09:02:10.000Z"
+    },
+    {
+      "_id": "msg4",
+      "senderId": "user2",
+      "receiverId": "user1",
+      "text": "Nice! Have you integrated Socket.IO yet?",
+      "image": "",
+      "createdAt": "2026-08-07T09:03:05.000Z",
+      "updatedAt": "2026-08-07T09:03:05.000Z"
+    },
+    {
+      "_id": "msg5",
+      "senderId": "user1",
+      "receiverId": "user2",
+      "text": "Yes! I'm testing online users now.",
+      "image": "",
+      "createdAt": "2026-08-07T09:04:22.000Z",
+      "updatedAt": "2026-08-07T09:04:22.000Z"
+    },
+    {
+      "_id": "msg6",
+      "senderId": "user2",
+      "receiverId": "user1",
+      "text": "I'm doing great. Working on the WhatsApp clone 😄hn",
+      "image": "https://picsum.photos/300/200",
+      "createdAt": "2026-08-07T09:05:10.000Z",
+      "updatedAt": "2026-08-07T09:05:10.000Z"
+    },
+    {
+      "_id": "msg7",
+      "senderId": "user1",
+      "receiverId": "user2",
+      "text": "Looks awesome! 👍",
+      "image": "",
+      "createdAt": "2026-08-07T09:06:08.000Z",
+      "updatedAt": "2026-08-07T09:06:08.000Z"
+    },
+    {
+      "_id": "msg8",
+      "senderId": "user2",
+      "receiverId": "user1",
+      "text": "Let's test real-time messaging next.",
+      "image": "",
+      "createdAt": "2026-08-07T09:07:30.000Z",
+      "updatedAt": "2026-08-07T09:07:30.000Z"
+    }
+  ]
+}
