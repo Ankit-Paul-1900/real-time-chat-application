@@ -4,6 +4,7 @@ import Input from './input';
 import Link from 'next/link';
 import { useState } from 'react';
 import axios from 'axios';
+import api from '@/lib/axios';
 
 const regDATA= {name:"",email:"",password:""}
 interface RegProps{
@@ -28,7 +29,7 @@ const Register = ({state,stateFunction}:stateProps) => {
     const registerHandler=async(e:React.ChangeEvent<HTMLInputElement>,payload:RegProps)=>{
         e.preventDefault();
         setLoading(true);
-        const response=await axios.post("http://localhost:5000/user/register",payload).then((res)=>{
+        const response=await api.post("/user/register",payload).then((res)=>{
             stateFunction(!state)
         }).catch((err)=>{
             console.log(err)

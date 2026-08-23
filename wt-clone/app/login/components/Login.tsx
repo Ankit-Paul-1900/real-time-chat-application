@@ -5,6 +5,7 @@ import Input from './input';
 import axios from 'axios';
 import { useAuthContext } from '@/app/context/AuthContext';
 import toast from 'react-hot-toast';
+import api from '@/lib/axios';
 interface  Data{
     email:string
     password:string
@@ -33,7 +34,7 @@ function Login({state,stateFunction}:stateProps) {
             e.preventDefault();
             
              setLoading(true);
-        await axios.post("http://localhost:5000/user/login",
+        await api.post("/user/login",
             userdata, 
             {
             withCredentials: true,
