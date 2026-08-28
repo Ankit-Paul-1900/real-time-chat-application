@@ -28,7 +28,7 @@ initSocket(server);
 // const server=http.createServer(app);
 app.use(express.json({limit:"4mb"}));
 app.use(express.urlencoded({extended:true}));
-    app.use(cors({ origin: "http://localhost:3000", credentials: true }));//{ origin: "http://localhost:5000", credentials: true }
+    app.use(cors({ origin: process.env.NEXT_FRONTEND_URI, credentials: true }));//{ origin: "http://localhost:5000", credentials: true }
 app.use(cookieParser());
 app.use("/uploads",express.static("uploads"));
 app.use("/user",router);
