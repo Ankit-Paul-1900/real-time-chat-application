@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -9,6 +8,10 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+  },
+
+  turbopack: {
+    root: __dirname,
   },
 };
 
