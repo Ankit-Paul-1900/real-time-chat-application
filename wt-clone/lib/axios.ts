@@ -15,78 +15,78 @@ const refreshApi = axios.create({
 let isRefreshing = false;
 let refreshPromise: Promise<any> | null = null;
 
-api.interceptors.response.use(
-    (response) => response,
+// api.interceptors.response.use(
+//     (response) => response,
 
-    async (error) => {
-        const originalRequest = error.config;
+//     async (error) => {
+//         const originalRequest = error.config;
 
-        // Only handle 401
-        if (error.response?.status !== 401) {
-            return Promise.reject(error);
-        }
+//         // Only handle 401
+//         if (error.response?.status !== 401) {
+//             return Promise.reject(error);
+//         }
 
-        // Don't refresh these endpoints
-        const skipRefresh = [
-            "/user/login",
-            "/user/register",
-            "/user/auth/refresh",
-        ];
+//         // Don't refresh these endpoints
+//         const skipRefresh = [
+//             "/user/login",
+//             "/user/register",
+//             "/user/auth/refresh",
+//         ];
 
-        const shouldSkipRefresh = skipRefresh.some((url) =>
-            originalRequest?.url?.includes(url)
-        );
+//         const shouldSkipRefresh = skipRefresh.some((url) =>
+//             originalRequest?.url?.includes(url)
+//         );
 
-        if (shouldSkipRefresh) {
-            return Promise.reject(error);
-        }
+//         if (shouldSkipRefresh) {
+//             return Promise.reject(error);
+//         }
 
-        // Don't retry the same request twice
-        if (originalRequest?._retry) {
-            return Promise.reject(error);
-        }
+//         // Don't retry the same request twice
+//         if (originalRequest?._retry) {
+//             return Promise.reject(error);
+//         }
 
-        originalRequest._retry = true;
+//         originalRequest._retry = true;
 
-        try {
+//         try {
 
-            // If another request is already refreshing,
-            // wait for that same refresh request.
-            if (!isRefreshing) {
+//             // If another request is already refreshing,
+//             // wait for that same refresh request.
+//             if (!isRefreshing) {
 
-                isRefreshing = true;
-                console.log("Refreh token used!!!")
-                refreshPromise = refreshApi.post(
-                    "/user/auth/refresh"
-                );
-            }
+//                 isRefreshing = true;
+//                 console.log("Refreh token used!!!")
+//                 refreshPromise = refreshApi.post(
+//                     "/user/auth/refresh"
+//                 );
+//             }
 
-            await refreshPromise;
+//             await refreshPromise;
 
-            // Refresh completed successfully.
-            // Browser now has the new accessToken cookie.
+//             // Refresh completed successfully.
+//             // Browser now has the new accessToken cookie.
 
-            return api(originalRequest);
+//             return api(originalRequest);
 
-        } catch (refreshError) {
+//         } catch (refreshError) {
 
-            console.error(
-                "Refresh token failed:",
-                refreshError
-            );
+//             console.error(
+//                 "Refresh token failed:",
+//                 refreshError
+//             );
 
-            // Refresh token is invalid/expired
-            window.location.href = "/login";
+//             // Refresh token is invalid/expired
+//             window.location.href = "/login";
 
-            return Promise.reject(refreshError);
+//             return Promise.reject(refreshError);
 
-        } finally {
+//         } finally {
 
-            // Only the refresh operation should reset this state
-            isRefreshing = false;
-            refreshPromise = null;
-        }
-    }
-);
+//             // Only the refresh operation should reset this state
+//             isRefreshing = false;
+//             refreshPromise = null;
+//         }
+//     }
+// );
 
 export default api;
