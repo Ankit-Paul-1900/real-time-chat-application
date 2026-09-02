@@ -20,7 +20,7 @@ dbConnect();
  
 export const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",    
+        origin: process.env.NEXT_FRONTEND_URI,    
         credentials: true,
     }});
 initSocket(server);
