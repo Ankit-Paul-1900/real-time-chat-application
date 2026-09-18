@@ -8,19 +8,29 @@ const router = express.Router();
 
 const authenticateToken = (req, res, next) => {
     try {
-        // const token = req.header("Authorization")?.replace(/^Bearer\s+/i, "");//req.cookies?.token ||
-        //  req.cookies.Token ||
-        const token =req.cookies.Token || req.header("Authorization")?.replace(/^Bearer\s+/i, "") ;
+        const token = req.cookies?.Token;
+
         if (!token) {
-            return res.status(401).json({ success: false, message: "Token missing" });
+            return res.status(401).json({
+                success: false,
+                message: "Token missing"
+            });
         }
 
-        const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const payload = jwt.verify(
+            token,
+            process.env.JWT_SECRET_KEY
+        );
+
         req.userId = payload.userId;
+
         next();
-    }
-    catch (error) {
-        return res.status(401).json({ success: false, message: "Invalid or expired token", error: error.message });
+
+    } catch (error) {
+        return res.status(401).json({
+            success: false,
+            message: "Invalid or expired token"
+        });
     }
 };
 

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAuthContext } from '@/app/context/AuthContext';
 import toast from 'react-hot-toast';
 import api from '@/lib/axios';
+import Cookies from "js-cookie";
 interface  Data{
     email:string
     password:string
@@ -34,24 +35,41 @@ function Login({state,stateFunction}:stateProps) {
             e.preventDefault();
             
              setLoading(true);
-        await api.post("/user/login",
+             try{
+        const res=await api.post("/user/login",
             userdata, 
             {
             withCredentials: true,
             }
-        ).then(async (res)=>{
-            const user=await checkAuth();
-            router.push('/')
+        )
+        if (res.status === 200) {
 
-            }).catch((err)=>{
-                console.log(err)
-            }).finally(()=>{
-                stateFunction(!state)
-                setLoading(false);
+            // Create a frontend-only authentication marker.
+            // Do NOT put the JWT here.
+            Cookies.set("isLoggedIn", "true", {
+                expires: 1,
+                secure: window.location.protocol === "https:",
+                sameSite: "lax",
+                path: "/",
+            });
 
-                setUserdata({email:"",password:""})
-            } )}
+            await checkAuth();
 
+            router.push("/");
+        }
+        } catch (err) {
+        console.log(err);
+
+    } finally {
+        stateFunction(!state);
+        setLoading(false);
+
+        setUserdata({
+            email: "",
+            password: ""
+        });
+    }
+};
 
             
   return (

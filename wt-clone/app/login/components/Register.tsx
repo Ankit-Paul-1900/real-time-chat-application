@@ -6,11 +6,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import api from '@/lib/axios';
 
-const regDATA= {name:"",email:"",password:""}
+const regDATA= {name:"",email:"",password:"",agreeToTerms:false}
 interface RegProps{
     name:string
     email: string
     password:string
+    agreeToTerms:boolean
 
 }
 interface stateProps{
@@ -39,7 +40,12 @@ const Register = ({state,stateFunction}:stateProps) => {
         } )
     }
 
-
+    const isRegisterDisabled =
+  loading ||
+  !regData?.name ||
+  !regData?.email ||
+  !regData?.password ||
+  !regData?.agreeToTerms;
   return (
     <div className='flex flex-col gap-2  w-80 p-3 border border-gray-500 rounded-md'>
       <h1 className='text-lg font-bold text-white'>Sign Up</h1>
@@ -47,15 +53,24 @@ const Register = ({state,stateFunction}:stateProps) => {
           <Input id="name" name="name" type="text" value={regData.name} placeholder="Full Name"  onChange={(e:any)=>inputhandler(e)}/>
           <Input id="email" name="email" type="email" value={regData.email} placeholder="Email Address" onChange={(e:any)=>inputhandler(e)}/>
           <Input id="password" name="password" type="password" value={regData.password} placeholder="Password" onChange={(e:any)=>inputhandler(e)}/>
-          <button className={`py-3 w-full bg-linear-to-r ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'} from-purple-400 to-violet-600 text-white rounded cursor-pointer`} disabled={loading}>
+          <p className=''>
+          <input id="checkbox-1" type="checkbox" value="" name="" onChange={(e)=>setRegData((prev)=>({...prev, agreeToTerms: !!e.target.value}))} className='my-2'/>
+          <span className='text-xs text-white'> *Agree to the terms of use & privacy policy.</span>
+          </p>
+          <button
+            className={` my-2 py-3 w-full bg-linear-to-r from-purple-400 to-violet-600 text-white rounded cursor-pointer
+                ${
+                isRegisterDisabled
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:opacity-90"
+                }`}
+            disabled={isRegisterDisabled}
+            >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
       </form>
-          <p className=''>
-          <input id="checkbox-1" type="checkbox" value="" name=""/>
-          <span className='text-xs text-white'>Agree to the terms of use & privacy policy.</span>
-          </p>
-          <p className='text-sm font-bold text-white my-2'>Already have an account? <span className='text-purple-600 text-bold cursor-pointer' onClick={statehandler}>Create Account</span></p>
+          
+          <p className='text-sm font-bold text-white my-2'>Already have an account? <span className='text-purple-600 text-bold cursor-pointer' onClick={statehandler}>Log In</span></p>
     </div>
   )
 }
