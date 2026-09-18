@@ -17,6 +17,7 @@ interface stateProps{
 }
 function Login({state,stateFunction}:stateProps) {
     const {checkAuth}=useAuthContext();
+    const [showPassword, setShowPassword] = useState< "text" | "password">("password");
     const router = useRouter();
     const [loading,setLoading]=useState<boolean>(false);
     const [userdata,setUserdata]=useState<Data>({email:"",
@@ -79,9 +80,18 @@ function Login({state,stateFunction}:stateProps) {
         <Input id="email" name="email" type="text" placeholder="Username" value={userdata.email} 
         onChange={(e)=>{inputhandler(e)} } 
         className='my-4 border-2 border-gray-400 relative min-w-full py-2 px-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-indigo-600'/>
-         <Input id="email" name="password" type="password" placeholder="Password" value={userdata.password} 
+         <div className='relative'>
+          <Input id="email" name="password" type={showPassword} placeholder="Password" value={userdata.password} 
         onChange={(e)=>{inputhandler(e)}}
         className='my-4 border-2 border-gray-400 relative min-w-full py-2 px-1 rounded-sm  focus:outline-none focus:ring-2 focus:ring-indigo-600'/>
+          <button
+    type="button"
+    onClick={() => setShowPassword(showPassword ==="password"?"text":"password")}
+    className="absolute right-3 top-1/2 -translate-y-1/2"
+  >
+    {showPassword==="password" ? "🙈" : "👁️"}
+  </button>
+  </div>
        
        
        <button className={`w-full bg-linear-to-r ${loading || !isLoginEnable ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'} from-purple-600 to-violet-600 p-2 rounded-sm text-white text-xl disabled:cursor-not-allowed cursor-pointer`} disabled={!isLoginEnable || loading} >

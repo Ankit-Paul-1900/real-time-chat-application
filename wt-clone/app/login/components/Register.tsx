@@ -21,8 +21,13 @@ interface stateProps{
 const Register = ({state,stateFunction}:stateProps) => {
     const [loading,setLoading]=useState<boolean>(false);
     const [regData,setRegData]=useState<RegProps>(regDATA)
+    const [showPassword, setShowPassword] = useState< "text" | "password">("password");
      const inputhandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        setRegData((prev)=>({...prev,[e.target.name]:e.target.value}));
+         const { name, value, type, checked } = e.target;
+         setRegData((prev) => ({
+    ...prev,
+    [name]: type === "checkbox" ? checked : value,
+  }));
     }
     const statehandler=()=>{
         stateFunction(!state)
@@ -52,9 +57,20 @@ const Register = ({state,stateFunction}:stateProps) => {
       <form className='' onSubmit={(e:any)=>registerHandler(e,regData)}>
           <Input id="name" name="name" type="text" value={regData.name} placeholder="Full Name"  onChange={(e:any)=>inputhandler(e)}/>
           <Input id="email" name="email" type="email" value={regData.email} placeholder="Email Address" onChange={(e:any)=>inputhandler(e)}/>
-          <Input id="password" name="password" type="password" value={regData.password} placeholder="Password" onChange={(e:any)=>inputhandler(e)}/>
+          <div className='relative'>
+          <Input id="password" name="password" type={showPassword} value={regData.password} placeholder="Password" onChange={(e:any)=>inputhandler(e)}/>
+          <button
+    type="button"
+    onClick={() => setShowPassword(showPassword ==="password"?"text":"password")}
+    className="absolute right-3 top-1/2 -translate-y-1/2"
+  >
+    {showPassword==="password" ? "🙈" : "👁️"}
+  </button>
+  </div>
           <p className=''>
-          <input id="checkbox-1" type="checkbox" value="" name="" onChange={(e)=>setRegData((prev)=>({...prev, agreeToTerms: !!e.target.value}))} className='my-2'/>
+          <input id="checkbox-1" type="checkbox"  name="agreeToTerms"
+  checked={regData.agreeToTerms || false}
+  onChange={inputhandler} className='my-2'/>
           <span className='text-xs text-white'> *Agree to the terms of use & privacy policy.</span>
           </p>
           <button

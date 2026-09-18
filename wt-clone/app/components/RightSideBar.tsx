@@ -3,6 +3,7 @@ import {userData} from "@/app/data/model";
 import { useAuthContext } from '../context/AuthContext';
 import {useRouter} from "next/navigation";
 import { useChatContext } from '../context/ChatContext';
+import Cookies from "js-cookie";
 interface userProps{
   logout:()=>Promise<void>
 }
@@ -15,6 +16,7 @@ const RightSideBar = ({logout}:userProps) => {
   const logoutHandler=async()=>{
     setLoading(true);
     const response = await logout();
+    Cookies.remove("isLoggedIn");
     setLoading(false);
     router.push('/login')
   }

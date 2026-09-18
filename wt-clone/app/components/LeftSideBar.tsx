@@ -8,7 +8,7 @@ import {userData} from "../data/model";
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
-
+import Cookies from "js-cookie";
 
 function LeftSideBar( ) {
   const {getusers,users,selectedUser,setSelectedUser,unseenMessages,setUnseenMessages,getMessages}=useChatContext();
@@ -44,9 +44,17 @@ function LeftSideBar( ) {
 
   }
   const handleLogout=async()=>{
-    const response = await logout();
+     try {
+    await logout();
+
+    // Delete frontend authentication marker
+    Cookies.remove("isLoggedIn");
+
     setDispalyOn(false);
-    router.push('/login')
+    router.push("/login");
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
   }
   return (
     <div className={`flex flex-col flex-1  ${users ? 'min-w-[26%]' : 'min-w-[40%]'}  py-2 px-3`}>

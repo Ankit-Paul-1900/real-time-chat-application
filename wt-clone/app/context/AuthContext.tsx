@@ -5,6 +5,7 @@ import { createContext, ReactNode, useContext, useState, useEffect } from "react
 import {io, Socket} from "socket.io-client";
 import { useRouter,usePathname} from "next/navigation";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 interface AuthContextType {
   currentuser: any | null;
   onlineUsers: string[];
@@ -101,6 +102,12 @@ const connectSocket = (userdata:any) => {
     if(response.data.success){
       setCurrentuser(null); 
       setOnlineUsers([]);
+       
+
+    // Delete frontend authentication marker
+    Cookies.remove("isLoggedIn");
+
+   
       toast.success("Logged out successfully");
       socket?.disconnect();
       
